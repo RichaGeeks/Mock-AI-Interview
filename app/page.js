@@ -1,103 +1,174 @@
-import Image from "next/image";
+// app/page.js
+import Link from 'next/link';
+import { getServerSession } from 'next-auth';
+import { authOptions } from './api/auth/[...nextauth]/route';
+import SignInButton from '@/components/SignInButton';
+import TakeInterviewButton from '@/components/TakeInterviewButton';
 
-export default function Home() {
+export default async function Home() {
+  const session = await getServerSession(authOptions);
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.js
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <main className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
+      {/* Navigation */}
+      <nav className="flex justify-between items-center p-6">
+        <div className="text-2xl font-bold text-blue-600">MockAI Interview</div>
+        {session ? (
+          <div className="flex items-center gap-4">
+            <span className="text-gray-700">Welcome, {session.user.name}</span>
+            <Link 
+              href="/dashboard" 
+              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+            >
+              Dashboard
+            </Link>
+          </div>
+        ) : (
+          <SignInButton />
+        )}
+      </nav>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+      {/* Hero Section */}
+      <section className="container mx-auto px-6 py-24 text-center">
+        <h1 className="text-5xl font-bold text-gray-900 mb-6">
+          Ace Your Next Interview with AI
+        </h1>
+        <p className="text-xl text-gray-600 mb-12 max-w-2xl mx-auto">
+          Practice with realistic AI interviews, get instant feedback, and track your progress over time.
+        </p>
+        
+        {session ? (
+          <TakeInterviewButton />
+        ) : (
+          <div className="flex justify-center gap-4">
+            <SignInButton large />
+            <Link
+              href="/about"
+              className="px-8 py-4 border-2 border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 transition text-lg font-medium"
+            >
+              Learn More
+            </Link>
+          </div>
+        )}
+      </section>
+
+      {/* Features Section */}
+      <section className="bg-white py-20">
+        <div className="container mx-auto px-6">
+          <h2 className="text-3xl font-bold text-center mb-16">How It Works</h2>
+          <div className="grid md:grid-cols-3 gap-12">
+            {/* Feature 1 */}
+            <div className="text-center">
+              <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
+                <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold mb-3">Customize Your Interview</h3>
+              <p className="text-gray-600">
+                Select your job role, experience level, and skills to get tailored interview questions.
+              </p>
+            </div>
+
+            {/* Feature 2 */}
+            <div className="text-center">
+              <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
+                <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold mb-3">Realistic Practice</h3>
+              <p className="text-gray-600">
+                Experience video interviews with different personas and record your responses.
+              </p>
+            </div>
+
+            {/* Feature 3 */}
+            <div className="text-center">
+              <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
+                <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold mb-3">Instant Feedback</h3>
+              <p className="text-gray-600">
+                Get AI-powered scores and detailed feedback on each answer immediately.
+              </p>
+            </div>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+      </section>
+
+      {/* Testimonials */}
+      <section className="py-20 bg-gray-50">
+        <div className="container mx-auto px-6">
+          <h2 className="text-3xl font-bold text-center mb-16">What Our Users Say</h2>
+          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            {/* Testimonial 1 */}
+            <div className="bg-white p-8 rounded-xl shadow-sm">
+              <div className="flex items-center mb-4">
+                <div className="w-12 h-12 rounded-full bg-gray-300 mr-4"></div>
+                <div>
+                  <h4 className="font-medium">Sarah K.</h4>
+                  <p className="text-gray-500 text-sm">Software Engineer</p>
+                </div>
+              </div>
+              <p className="text-gray-700">
+                "MockAI helped me prepare for my FAANG interviews. The feedback was so detailed I could pinpoint exactly what to improve."
+              </p>
+            </div>
+
+            {/* Testimonial 2 */}
+            <div className="bg-white p-8 rounded-xl shadow-sm">
+              <div className="flex items-center mb-4">
+                <div className="w-12 h-12 rounded-full bg-gray-300 mr-4"></div>
+                <div>
+                  <h4 className="font-medium">James L.</h4>
+                  <p className="text-gray-500 text-sm">Product Manager</p>
+                </div>
+              </div>
+              <p className="text-gray-700">
+                "I was nervous about behavioral interviews, but practicing with different personas gave me the confidence I needed."
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-20 bg-blue-600 text-white">
+        <div className="container mx-auto px-6 text-center">
+          <h2 className="text-3xl font-bold mb-6">Ready to Ace Your Next Interview?</h2>
+          <p className="text-xl mb-8 max-w-2xl mx-auto">
+            Join thousands of professionals who improved their interview skills with MockAI.
+          </p>
+          {session ? (
+            <TakeInterviewButton dark />
+          ) : (
+            <SignInButton large dark />
+          )}
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-gray-900 text-white py-12">
+        <div className="container mx-auto px-6">
+          <div className="flex flex-col md:flex-row justify-between items-center">
+            <div className="mb-6 md:mb-0">
+              <div className="text-2xl font-bold text-white mb-2">MockAI Interview</div>
+              <p className="text-gray-400">The smart way to prepare for interviews</p>
+            </div>
+            <div className="flex gap-6">
+              <Link href="/privacy" className="text-gray-400 hover:text-white transition">Privacy</Link>
+              <Link href="/terms" className="text-gray-400 hover:text-white transition">Terms</Link>
+              <Link href="/contact" className="text-gray-400 hover:text-white transition">Contact</Link>
+            </div>
+          </div>
+          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+            © {new Date().getFullYear()} MockAI Interview. All rights reserved.
+          </div>
+        </div>
       </footer>
-    </div>
+    </main>
   );
 }
