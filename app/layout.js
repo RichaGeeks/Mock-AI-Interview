@@ -1,5 +1,6 @@
 // app/layout.js
 import './globals.css';
+import ClientProvider from './client-provider';
 
 export const metadata = {
   title: 'MockAI Interview - Practice with AI',
@@ -10,7 +11,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className="min-h-screen">
-        {children}
+        <ClientProvider>{children}</ClientProvider>
       </body>
     </html>
   );

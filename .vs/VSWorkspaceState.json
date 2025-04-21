@@ -1,7 +1,16 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\app",
+    "\\app\\api\\interviews",
+    "\\app\\contact",
+    "\\app\\dashboard",
+    "\\app\\interview",
+    "\\app\\interview\\persona",
+    "\\app\\privacy",
+    "\\app\\terms",
+    "\\public"
   ],
-  "SelectedNode": "\\C:\\Users\\Admin\\OneDrive\\Desktop\\Mock AI\\mock-ai-interview",
+  "SelectedNode": "\\public\\next.svg",
   "PreviewInSolutionExplorer": false
 }
