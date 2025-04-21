@@ -1,23 +1,25 @@
+
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import dbConnect from '@/lib/dbConnect';
 import Interview from '@/models/Interview';
-import connectDB from '@/lib/db';
 
 export async function GET() {
-  await connectDB();
   const session = await getServerSession(authOptions);
+  if (!session) return new Response('Unauthorized', { status: 401 });
 
-  if (!session) {
-    return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401 });
-  }
+  await dbConnect();
 
   try {
     const interviews = await Interview.find({ userId: session.user.id })
-      .sort({ date: -1 })
-      .limit(10);
+      .sort({ createdAt: -1 })
+      .lean();
 
-    return new Response(JSON.stringify(interviews), { status: 200 });
+    return Response.json(interviews);
   } catch (error) {
-    return new Response(JSON.stringify({ error: error.message }), { status: 500 });
+    return Response.json(
+      { error: 'Failed to fetch interviews' },
+      { status: 500 }
+    );
   }
 }
