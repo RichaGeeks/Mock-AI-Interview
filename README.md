@@ -90,34 +90,34 @@ Preview
 
 ## 🚀 Getting Started
 
-1. Clone the repository
-git clone my repo
-cd mock-interview-ai
-2. Install dependencies
-npm install
-3. Add environment variables
-Create a .env.local file and configure:
+1. Clone the repository <br>
+git clone my repo <br>
+cd mock-interview-ai <br> <br>
+2. Install dependencies <br>
+npm install <br> <br>
+3. Add environment variables <br>
+Create a .env.local file and configure:<br>
+<br>
+MONGODB_URI=your_mongodb_uri<br>
+NEXTAUTH_URL=http://localhost:3000 <br>
+NEXTAUTH_SECRET=your_nextauth_secret <br>
+GEMINI_API_KEY=your_gemini_api_key <br> <br>
+4. Run the  <br>
+npm run dev <br>
+Visit http://localhost:3000 to get started. <br>
+<br>
+📌 Future Enhancements <br>
+🎙️ Improve speech analysis with Whisper.js <br>
+🧩 Add customizable interviewer personalities <br>
+📥 Download interview reports as PDF <br>
+🌍 Support for multiple languages <br>
+📅 Schedule live mock interviews with mentors <br>
+<br>
+🙌 Acknowledgements <br>
+Gemini API <br>
 
-MONGODB_URI=your_mongodb_uri
-NEXTAUTH_URL=http://localhost:3000
-NEXTAUTH_SECRET=your_nextauth_secret
-GEMINI_API_KEY=your_gemini_api_key
-4. Run the app
-npm run dev
-Visit http://localhost:3000 to get started.
+NextAuth.js <br>
 
-📌 Future Enhancements
-🎙️ Improve speech analysis with Whisper.js
-🧩 Add customizable interviewer personalities
-📥 Download interview reports as PDF
-🌍 Support for multiple languages
-📅 Schedule live mock interviews with mentors
-
-🙌 Acknowledgements
-Gemini API
-
-NextAuth.js
-
-Web Speech API Docs
-
+Web Speech API Docs <br>
+<br>
 Ready to face real interviews with confidence? This tool is your ultimate prep buddy. 🎯
